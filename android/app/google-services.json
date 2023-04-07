@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "183873529310",
+    "project_id": "ombre-77e48",
+    "storage_bucket": "ombre-77e48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183873529310:android:a68d5c533c70fac4b6e94f",
+        "android_client_info": {
+          "package_name": "com.example.ombre_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183873529310-j16543q4q71a4cnhr04sirk275gfb8tf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ombre_task",
+            "certificate_hash": "8462e2276c57b9d7669af7ed0d7ba3edd825097d"
+          }
+        },
+        {
+          "client_id": "183873529310-dt022f19to7143oc6i19e39vd3655daf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVcHbQRVJtKijYrpOu8pmUV4WBTz3nVsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183873529310-dt022f19to7143oc6i19e39vd3655daf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

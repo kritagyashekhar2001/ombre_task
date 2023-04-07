@@ -50,6 +50,7 @@ class _VideoScreenState extends State<VideoScreen> {
   }
 
   showOptionsDialog(BuildContext context) {
+    
     return showDialog(
       context: context,
       builder: (context) => SimpleDialog(

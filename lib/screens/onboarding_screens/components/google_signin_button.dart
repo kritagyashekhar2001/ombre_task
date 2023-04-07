@@ -19,7 +19,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
       listener: (context, state) {
         if (state is UserLoggedIn) {
           Navigator.pushNamedAndRemoveUntil(
-              context, '/addVideoScreen', (route) => false);
+              context, '/videoScreen', (route) => false);
         }
       },
       child: OutlinedButton(

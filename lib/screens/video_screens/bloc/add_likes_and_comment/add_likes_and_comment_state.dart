@@ -5,4 +5,3 @@ abstract class AddLikesAndCommentState {}
 
 class AddLikesAndCommentInitial extends AddLikesAndCommentState {}
 
-class LikesChanged extends AddLikesAndCommentState {}

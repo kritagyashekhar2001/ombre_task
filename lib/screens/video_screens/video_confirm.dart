@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ombre_task/screens/home_screen/bloc/video_upload_bloc/video_upload_bloc.dart';
+import 'package:ombre_task/screens/video_screens/bloc/video_upload_bloc/video_upload_bloc.dart';
 import 'package:video_player/video_player.dart';
+import '../../resources/resources.dart' as resources;
 
 class ConfirmScreen extends StatefulWidget {
   final File videoFile;
@@ -51,13 +53,46 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
       body: BlocListener<VideoUploadBloc, VideoUploadState>(
         listener: (context, state) {
           if (state is VideoUploaded) {
-            Navigator.pop(context);
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/videoScreen", (route) => false);
           } else if (state is VideoUploadError) {
+            Navigator.pop(context);
             const snackBar = SnackBar(
                 content: Text("Something went wrong"),
                 backgroundColor: Colors.red);
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          } else if (state is VideoUploading) {
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) => BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                child: WillPopScope(
+                  onWillPop: () async => false,
+                  child: AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(
+                            color: resources.blackColor),
+                        SizedBox(height: size.height * 0.015),
+                        Text(
+                          'Please Wait...',
+                          style: TextStyle(
+                            color: resources.blackColor,
+                            fontFamily: "PJS",
+                            fontWeight: FontWeight.w500,
+                            fontSize: size.height * 0.02,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
           }
         },
         child: SingleChildScrollView(
@@ -72,8 +107,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    margin:  EdgeInsets.symmetric(horizontal: size.width*0.05),
-                    width: size.width *0.9,
+                    margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    width: size.width * 0.9,
                     child: TextFormField(
                       controller: _captionController,
                       decoration: const InputDecoration(
@@ -82,17 +117,18 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: size.height*0.015,),
+                  SizedBox(
+                    height: size.height * 0.015,
+                  ),
                   ElevatedButton(
                     onPressed: () {
-                      BlocProvider.of<VideoUploadBloc>(context).add(
-                          UploadVideo(
-                              _captionController.text, widget.videoPath));
+                      BlocProvider.of<VideoUploadBloc>(context).add(UploadVideo(
+                          _captionController.text, widget.videoPath));
                     },
-                    child:  Text(
+                    child: Text(
                       'Share!',
                       style: TextStyle(
-                        fontSize: size.height*0.02,
+                        fontSize: size.height * 0.02,
                         color: Colors.white,
                       ),
                     ),

@@ -1,14 +1,8 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meta/meta.dart';
 
-part 'video_play_event.dart';
-part 'video_play_state.dart';
-
-enum StreamEvents { loadVideos, nextVideos ,addLikes}
+enum StreamEvents { loadVideos, nextVideos, addLikes }
 
 class VideoPlayBloc {
   final _stateStreamController = StreamController<List?>.broadcast();
@@ -27,7 +21,10 @@ class VideoPlayBloc {
 
     eventStream.listen((event) async {
       if (event == StreamEvents.loadVideos) {
-        var messRef = FirebaseFirestore.instance.collection("videos");
+        var messRef = FirebaseFirestore.instance
+            .collection("videos")
+            .orderBy("timeStamp", descending: true)
+            .limit(5);
         var stream = messRef.snapshots();
         currentCollection = await messRef.get();
         lastVisible = currentCollection.docs[currentCollection.docs.length - 1];
@@ -38,12 +35,12 @@ class VideoPlayBloc {
             videoList.add(i.data());
           }
           listlength = videoList.length;
-          // videoList.shuffle();
           videoSink.add(videoList);
         });
       } else if (event == StreamEvents.nextVideos) {
         var messRef = FirebaseFirestore.instance
             .collection('videos')
+            .orderBy("timeStamp", descending: true)
             .startAfterDocument(lastVisible)
             .limit(5);
         dynamic stream = messRef.snapshots();

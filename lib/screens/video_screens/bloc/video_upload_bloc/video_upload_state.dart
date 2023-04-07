@@ -8,3 +8,5 @@ class VideoUploadInitial extends VideoUploadState {}
 class VideoUploaded extends VideoUploadState {}
 
 class VideoUploadError extends VideoUploadState {}
+
+class VideoUploading extends VideoUploadState {}
